@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JurisX - Acompanhamento de Processos</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #1a3d66;
+            --secondary-color: #2e86de;
+            --accent-color: #ff6b6b;
+            --light-bg: #f4f7fb;
+            --text-color: #2d3436;
+            --light-text: #ffffff;
+            --success-color: #10ac84;
+            --warning-color: #ff9f43;
+            --danger-color: #ee5253;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --card-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', 'Segoe UI', sans-serif;
+        }
+        
+        body {
+            background-color: var(--light-bg);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header & Navigation */
+        header {
+            background-color: var(--primary-color);
+            padding: 18px 0;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--light-text);
+            text-decoration: none;
+        }
+        
+        .logo-icon {
+            margin-right: 8px;
+            color: var(--accent-color);
+        }
+        
+        .logo span {
+            color: var(--accent-color);
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin: 0 12px;
+        }
+        
+        .nav-links a {
+            color: var(--light-text);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 15px;
+            transition: color 0.3s;
+            padding: 8px 6px;
+            border-radius: 4px;
+        }
+        
+        .nav-links a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .nav-links a.active {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--secondary-color);
+        }
+        
+        .user-menu {
+            display: flex;
+            align-items: center;
+        }
+        
+        .notification-badge {
+            position: relative;
+            margin-right: 20px;
+        }
+        
+        .notification-icon {
+            color: var(--light-text);
+            font-size: 20px;
+            cursor: pointer;
+        }
+        
+        .badge {
+            position: absolute;
+            top: -5px;
+            right: -8px;
+            background-color: var(--accent-color);
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            font-size: 11px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .user-profile {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: 20px;
+            transition: background-color 0.3s;
+        }
+        
+        .user-profile:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: var(--secondary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+        
+        .user-info {
+            color: var(--light-text);
+        }
+        
+        .user-name {
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .user-role {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+        
+        /* Main Content */
+        main {
+            padding: 24px 0;
+            min-height: calc(100vh - 160px);
+        }
+        
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+        
+        .page-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        
+        .actions-group {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .btn {
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            border: none;
+        }
+        
+        .btn-icon {
+            margin-right: 6px;
+            font-size: 16px;
+        }
+        
+        .btn-primary {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #2775c3;
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid #e2e8f0;
+            color: var(--text-color);
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--light-bg);
+        }
+        
+        /* Processo Layout */
+        .process-grid {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 24px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .process-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+        }
+               /* Lista de Processos */
+               .process-list-container {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            overflow: hidden;
+        }
+        
+        .process-header {
+            padding: 16px;
+            border-bottom: 1px solid #edf2f7;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .process-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        
+        .search-box {
+            padding: 12px 16px;
+            border-bottom: 1px solid #edf2f7;
+            position: relative;
+        }
+        
+        .search-box input {
+            width: 100%;
+            padding: 10px 12px 10px 36px;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            font-size: 14px;
+            outline: none;
+        }
+        
+        .search-box input:focus {
+            border-color: var(--secondary-color);
+        }
+        
+        .search-icon {
+            position: absolute;
+            left: 28px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #a0aec0;
+        }
+        
+        .filters {
+            padding: 12px 16px;
+            border-bottom: 1px solid #edf2f7;
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+        }
+        
+        .filter-pill {
+            padding: 6px 12px;
+            border-radius: 50px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+        
+        .filter-pill.active {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+        
+        .filter-pill:not(.active) {
+            background-color: #edf2f7;
+            color: #64748b;
+        }
+        
+        .filter-pill:hover:not(.active) {
+            background-color: #e2e8f0;
+        }
+        
+        .process-list {
+            list-style: none;
+            max-height: calc(100vh - 280px);
+            overflow-y: auto;
+        }
+        
+        .process-item {
+            padding: 16px;
+            border-bottom: 1px solid #edf2f7;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .process-item:hover {
+            background-color: var(--light-bg);
+        }
+        
+        .process-item.active {
+            background-color: rgba(46, 134, 222, 0.05);
+            border-left: 3px solid var(--secondary-color);
+        }
+        
+        .process-item-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 6px;
+        }
+        
+        .process-number {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        
+        .process-tag {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 500;
+        }
+        
+        .tag-civil {
+            background-color: rgba(46, 134, 222, 0.1);
+            color: var(--secondary-color);
+        }
+        
+        .tag-trabalhista {
+            background-color: rgba(16, 172, 132, 0.1);
+            color: var(--success-color);
+        }
+        
+        .tag-penal {
+            background-color: rgba(238, 82, 83, 0.1);
+            color: var(--danger-color);
+        }
+        
+        .tag-tributario {
+            background-color: rgba(255, 159, 67, 0.1);
+            color: var(--warning-color);
+        }
+        
+        .process-client {
+            margin-bottom: 6px;
+            font-size: 13px;
+        }
+        
+        .process-status-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            color: #64748b;
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 500;
+        }
+        
+        .status-active {
+            background-color: rgba(16, 172, 132, 0.1);
+            color: var(--success-color);
+        }
+        
+        .status-deadline {
+            background-color: rgba(255, 159, 67, 0.1);
+            color: var(--warning-color);
+        }
+        
+        .status-urgent {
+            background-color: rgba(238, 82, 83, 0.1);
+            color: var(--danger-color);
+        }
+
+               /* Detalhes do Processo */
+               .process-details {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            overflow: hidden;
+        }
+        
+        .details-header {
+            padding: 20px;
+            border-bottom: 1px solid #edf2f7;
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .process-title-big {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+        
+        .process-subtitle {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .client-info {
+            display: flex;
+            align-items: center;
+        }
+        
+        .client-icon {
+            margin-right: 4px;
+        }
+        
+        .tabs {
+            display: flex;
+            padding: 0 20px;
+            border-bottom: 1px solid #edf2f7;
+        }
+        
+        .tab {
+            padding: 14px 20px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s;
+        }
+        
+        .tab.active {
+            border-bottom: 2px solid var(--secondary-color);
+            color: var(--secondary-color);
+        }
+        
+        .tab:hover:not(.active) {
+            background-color: var(--light-bg);
+        }
+        
+        .tab-content {
+            padding: 20px;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        
+        .info-item {
+            margin-bottom: 8px;
+        }
+        
+        .info-label {
+            font-size: 12px;
+            color: #64748b;
+            margin-bottom: 4px;
+        }
+        
+        .info-value {
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .section-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--primary-color);
+            padding-bottom: 8px;
+            border-bottom: 1px solid #edf2f7;
+        }
+        
+        .timeline {
+            padding: 12px 0;
+        }
+        
+        .timeline-item {
+            position: relative;
+            padding-left: 30px;
+            padding-bottom: 24px;
+            border-left: 2px solid #edf2f7;
+        }
+        
+        .timeline-item:last-child {
+            border-left: 2px solid transparent;
+            padding-bottom: 0;
+        }
+        
+        .timeline-dot {
+            position: absolute;
+            left: -6px;
+            top: 0;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: var(--secondary-color);
+        }
+        
+        .timeline-date {
+            font-size: 12px;
+            color: #64748b;
+            margin-bottom: 4px;
+        }
+        
+        .timeline-title {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        
+        .timeline-desc {
+            font-size: 13px;
+            color: #4a5568;
+        }
+        
+        .timeline-attachment {
+            display: flex;
+            align-items: center;
+            margin-top: 8px;
+            padding: 8px;
+            background-color: var(--light-bg);
+            border-radius: 4px;
+            font-size: 12px;
+        }
+        
+        .attachment-icon {
+            margin-right: 6px;
+            color: var(--primary-color);
+        }
+        
+        .btn-group {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+        }
+        
+        .actions-panel {
+            padding: 16px;
+            background-color: var(--light-bg);
+            border-radius: 8px;
+            margin-top: 24px;
+        }
+        
+        .actions-title {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        
+        .btn-action {
+            padding: 6px 12px;
+            font-size: 12px;
+        }
+        
+        /* Para fins de compatibilidade com a estrutura principal */
+        .btn {
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            border: none;
+        }
+        
+        .btn-icon {
+            margin-right: 6px;
+            font-size: 16px;
+        }
+        
+        .btn-primary {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #2775c3;
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid #e2e8f0;
+            color: var(--text-color);
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--light-bg);
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="dashboard.html" class="logo">
+                    <i class="fas fa-scale-balanced logo-icon"></i>
+                    Juris<span>X</span>
+                </a>
+                
+                <ul class="nav-links">
+                    <li><a href="dashboard.html">Dashboard</a></li>
+                    <li><a href="processos.html" class="active">Processos</a></li>
+                    <li><a href="clientes.html">Clientes</a></li>
+                    <li><a href="comunicacao.html">Comunicação</a></li>
+                    <li><a href="agenda.html">Agenda</a></li>
+                    <li><a href="financeiro.html">Financeiro</a></li>
+                </ul>
+                
+                <div class="user-menu">
+                    <div class="notification-badge">
+                        <i class="fas fa-bell notification-icon"></i>
+                        <span class="badge">3</span>
+                    </div>
+                    
+                    <div class="user-profile">
+                        <div class="user-avatar">JS</div>
+                        <div class="user-info">
+                            <div class="user-name">João Silva</div>
+                            <div class="user-role">Advogado</div>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="page-header">
+                <h1 class="page-title">Acompanhamento de Processos</h1>
+                <div class="actions-group">
+                    <button class="btn btn-outline">
+                        <i class="fas fa-filter btn-icon"></i>
+                        Filtros
+                    </button>
+                    <button class="btn btn-outline">
+                        <i class="fas fa-download btn-icon"></i>
+                        Exportar
+                    </button>
+                    <button class="btn btn-primary">
+                        <i class="fas fa-plus btn-icon"></i>
+                        Novo Processo
+                    </button>
+                </div>
+            </div>
+
+            <div class="process-grid">
+                <!-- Os componentes serão incluídos aqui -->
+                <!-- Lista de processos (parte 1) -->
+                    <!-- Componente da Lista de Processos -->
+    <div class="process-list-container">
+        <div class="process-header">
+            <div class="process-title">Meus Processos</div>
+            <div class="process-count">128 processos</div>
+        </div>
+        
+        <div class="search-box">
+            <i class="fas fa-search search-icon"></i>
+            <input type="text" placeholder="Buscar processo, cliente ou número...">
+        </div>
+        
+        <div class="filters">
+            <div class="filter-pill active">Todos</div>
+            <div class="filter-pill">Ativos</div>
+            <div class="filter-pill">Pendentes</div>
+            <div class="filter-pill">Audiências</div>
+            <div class="filter-pill">Prazos</div>
+            <div class="filter-pill">Urgentes</div>
+        </div>
+        
+        <ul class="process-list">
+            <li class="process-item active">
+                <div class="process-item-header">
+                    <div class="process-number">0012345-67.2023.8.26.0100</div>
+                    <div class="process-tag tag-civil">Civil</div>
+                </div>
+                <div class="process-client">
+                    <i class="fas fa-user"></i> Maria Santos
+                </div>
+                <div class="process-status-row">
+                    <div>Vara: 2ª Vara Cível</div>
+                    <div class="status-badge status-active">Em andamento</div>
+                </div>
+            </li>
+            
+            <li class="process-item">
+                <div class="process-item-header">
+                    <div class="process-number">0045678-12.2023.8.26.0100</div>
+                    <div class="process-tag tag-trabalhista">Trabalhista</div>
+                </div>
+                <div class="process-client">
+                    <i class="fas fa-building"></i> Empresa ABC Ltda
+                </div>
+                <div class="process-status-row">
+                    <div>Vara: 5ª Vara do Trabalho</div>
+                    <div class="status-badge status-deadline">Prazo: 3 dias</div>
+                </div>
+            </li>
+            
+            <li class="process-item">
+                <div class="process-item-header">
+                    <div class="process-number">0078945-23.2023.8.26.0100</div>
+                    <div class="process-tag tag-penal">Penal</div>
+                </div>
+                <div class="process-client">
+                    <i class="fas fa-user"></i> João Oliveira
+                </div>
+                <div class="process-status-row">
+                    <div>Vara: 3ª Vara Criminal</div>
+                    <div class="status-badge status-urgent">Audiência: Amanhã</div>
+                </div>
+            </li>
+            
+            <li class="process-item">
+                <div class="process-item-header">
+                    <div class="process-number">0036925-47.2023.8.26.0100</div>
+                    <div class="process-tag tag-tributario">Tributário</div>
+                </div>
+                <div class="process-client">
+                    <i class="fas fa-building"></i> Comércio XYZ Ltda
+                </div>
+                <div class="process-status-row">
+                    <div>Vara: 1ª Vara da Fazenda Pública</div>
+                    <div class="status-badge status-active">Em andamento</div>
+                </div>
+            </li>
+            
+            <li class="process-item">
+                <div class="process-item-header">
+                    <div class="process-number">0058963-74.2023.8.26.0100</div>
+                    <div class="process-tag tag-civil">Civil</div>
+                </div>
+                <div class="process-client">
+                    <i class="fas fa-user"></i> Carlos Mendes
+                </div>
+                <div class="process-status-row">
+                    <div>Vara: 4ª Vara Cível</div>
+                    <div class="status-badge status-active">Em andamento</div>
+                </div>
+            </li>
+            
+            <li class="process-item">
+                <div class="process-item-header">
+                    <div class="process-number">0025896-32.2023.8.26.0100</div>
+                    <div class="process-tag tag-trabalhista">Trabalhista</div>
+                </div>
+                <div class="process-client">
+                    <i class="fas fa-building"></i> Indústria GHI S.A.
+                </div>
+                <div class="process-status-row">
+                    <div>Vara: 2ª Vara do Trabalho</div>
+                    <div class="status-badge status-deadline">Prazo: 5 dias</div>
+                </div>
+            </li>
+        </ul>
+    </div>
+    
+    <script>
+        // Lógica para a lista de processos
+        document.addEventListener('DOMContentLoaded', function() {
+            const processItems = document.querySelectorAll('.process-item');
+            const filterPills = document.querySelectorAll('.filter-pill');
+            
+            // Alternar processo ativo
+            processItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    processItems.forEach(i => i.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Aqui poderia disparar um evento para carregar os detalhes
+                    // do processo selecionado no painel direito
+                });
+            });
+            
+            // Alternar filtros
+            filterPills.forEach(pill => {
+                pill.addEventListener('click', function() {
+                    filterPills.forEach(p => p.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Aqui poderia implementar a lógica de filtragem
+                });
+            });
+        });
+    </script>
+                <!-- Detalhes do processo selecionado (parte 2) -->
+                    <!-- Componente de Detalhes do Processo -->
+    <div class="process-details">
+        <div class="details-header">
+            <div class="process-title-big">0012345-67.2023.8.26.0100</div>
+            <div class="process-subtitle">
+                <div class="client-info">
+                    <i class="fas fa-user client-icon"></i>
+                    <span>Maria Santos</span>
+                </div>
+                <div>
+                    <i class="fas fa-building"></i>
+                    <span>2ª Vara Cível</span>
+                </div>
+                <div>
+                    <i class="fas fa-tag"></i>
+                    <span>Civil</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="tabs">
+            <div class="tab active">Resumo</div>
+            <div class="tab">Andamentos</div>
+            <div class="tab">Documentos</div>
+            <div class="tab">Prazos</div>
+            <div class="tab">Financeiro</div>
+            <div class="tab">Notas</div>
+        </div>
+        
+        <div class="tab-content">
+            <div class="info-grid">
+                <div>
+                    <div class="info-item">
+                        <div class="info-label">Número do Processo</div>
+                        <div class="info-value">0012345-67.2023.8.26.0100</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Cliente</div>
+                        <div class="info-value">Maria Santos</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Tipo de Ação</div>
+                        <div class="info-value">Indenização por Danos Morais</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Vara</div>
+                        <div class="info-value">2ª Vara Cível</div>
+                    </div>
+                </div>
+                
+                <div>
+                    <div class="info-item">
+                        <div class="info-label">Status</div>
+                        <div class="info-value">
+                            <span class="status-badge status-active">Em andamento</span>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Data de Distribuição</div>
+                        <div class="info-value">15/03/2023</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Valor da Causa</div>
+                        <div class="info-value">R$ 25.000,00</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Advogado Responsável</div>
+                        <div class="info-value">João Silva</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section-title">Partes do Processo</div>
+            <div class="parties-info">
+                <div class="info-item">
+                    <div class="info-label">Autor</div>
+                    <div class="info-value">Maria Santos</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Réu</div>
+                    <div class="info-value">Empresa ABC Ltda</div>
+                </div>
+            </div>
+            
+            <div class="section-title">Últimos Andamentos</div>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-date">18/05/2023</div>
+                    <div class="timeline-title">Audiência de Conciliação</div>
+                    <div class="timeline-desc">
+                        Realizada audiência de conciliação. As partes não chegaram a um acordo. Processo seguirá para fase de instrução.
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-date">10/05/2023</div>
+                    <div class="timeline-title">Despacho</div>
+                    <div class="timeline-desc">
+                        Designada audiência de conciliação para o dia 18/05/2023, às 14h.
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-date">28/04/2023</div>
+                    <div class="timeline-title">Contestação</div>
+                    <div class="timeline-desc">
+                        Apresentada contestação pela parte ré.
+                    </div>
+                    <div class="timeline-attachment">
+                        <i class="fas fa-file-pdf attachment-icon"></i>
+                        <span>Contestação.pdf</span>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-date">15/03/2023</div>
+                    <div class="timeline-title">Distribuição</div>
+                    <div class="timeline-desc">
+                        Processo distribuído para a 2ª Vara Cível.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="btn-group">
+                <button class="btn btn-primary">
+                    <i class="fas fa-eye btn-icon"></i>
+                    Ver Todos os Andamentos
+                </button>
+            </div>
+            
+            <div class="section-title">Próximos Prazos</div>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-date">05/06/2023</div>
+                    <div class="timeline-title">Réplica</div>
+                    <div class="timeline-desc">
+                        Prazo para apresentação de réplica à contestação.
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-date">20/06/2023</div>
+                    <div class="timeline-title">Audiência de Instrução</div>
+                    <div class="timeline-desc">
+                        Audiência de instrução e julgamento.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="actions-panel">
+                <div class="actions-title">Ações Rápidas</div>
+                <div class="action-buttons">
+                    <button class="btn btn-outline btn-action">
+                        <i class="fas fa-file-alt btn-icon"></i>
+                        Adicionar Documento
+                    </button>
+                    <button class="btn btn-outline btn-action">
+                        <i class="fas fa-calendar-plus btn-icon"></i>
+                        Agendar Prazo
+                    </button>
+                    <button class="btn btn-outline btn-action">
+                        <i class="fas fa-comment-alt btn-icon"></i>
+                        Comunicar Cliente
+                    </button>
+                    <button class="btn btn-outline btn-action">
+                        <i class="fas fa-print btn-icon"></i>
+                        Imprimir Relatório
+                    </button>
+                    <button class="btn btn-outline btn-action">
+                        <i class="fas fa-share-alt btn-icon"></i>
+                        Compartilhar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Lógica para os detalhes do processo
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabs = document.querySelectorAll('.tab');
+            
+            // Alternar entre as abas
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Aqui seria implementada a lógica para mostrar o conteúdo 
+                    // correspondente à aba selecionada
+                    // Por exemplo: mostrarConteudoAba(this.textContent.toLowerCase());
+                });
+            });
+            
+            // Funcionalidade dos botões de ação
+            const actionButtons = document.querySelectorAll('.btn-action');
+            actionButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const action = this.textContent.trim();
+                    console.log(`Ação selecionada: ${action}`);
+                    
+                    // Aqui seriam implementadas as ações específicas
+                    // Por exemplo: if (action === 'Comunicar Cliente') { abrirComunicacao(); }
+                });
+            });
+            
+            // Funcionalidade para visualizar anexos
+            const attachments = document.querySelectorAll('.timeline-attachment');
+            attachments.forEach(attachment => {
+                attachment.addEventListener('click', function() {
+                    const fileName = this.querySelector('span').textContent;
+                    console.log(`Visualizando documento: ${fileName}`);
+                    
+                    // Aqui seria implementada a lógica para abrir o documento
+                });
+            });
+        });
+    </script>
+
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Script para integração das partes
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('JurisX - Sistema de Acompanhamento de Processos carregado');
+        });
+    </script>
+</body>
+</html>

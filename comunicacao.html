@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JurisX - Painel de Comunicação com Cliente</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #1a3d66;
+            --secondary-color: #2e86de;
+            --accent-color: #ff6b6b;
+            --light-bg: #f4f7fb;
+            --text-color: #2d3436;
+            --light-text: #ffffff;
+            --success-color: #10ac84;
+            --warning-color: #ff9f43;
+            --danger-color: #ee5253;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --card-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', 'Segoe UI', sans-serif;
+        }
+        
+        body {
+            background-color: var(--light-bg);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header & Navigation */
+        header {
+            background-color: var(--primary-color);
+            padding: 18px 0;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--light-text);
+            text-decoration: none;
+        }
+        
+        .logo-icon {
+            margin-right: 8px;
+            color: var(--accent-color);
+        }
+        
+        .logo span {
+            color: var(--accent-color);
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin: 0 12px;
+        }
+        
+        .nav-links a {
+            color: var(--light-text);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 15px;
+            transition: color 0.3s;
+            padding: 8px 6px;
+            border-radius: 4px;
+        }
+        
+        .nav-links a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .nav-links a.active {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--secondary-color);
+        }
+        
+        /* Main Content */
+        main {
+            padding: 24px 0;
+            min-height: calc(100vh - 160px);
+        }
+        
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: 20px;
+            transition: background-color 0.3s;
+        }
+        
+        .user-profile:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .notification-badge {
+            position: relative;
+            margin-right: 20px;
+        }
+        
+        .notification-icon {
+            color: var(--light-text);
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: var(--secondary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+        
+        .user-info {
+            color: var(--light-text);
+        }
+
+        .badge {
+            position: absolute;
+            top: -5px;
+            right: -8px;
+            background-color: var(--accent-color);
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            font-size: 11px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .user-name {
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .user-role {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+        
+        .page-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        
+        .btn {
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            border: none;
+        }
+        
+        .btn-icon {
+            margin-right: 6px;
+            font-size: 16px;
+        }
+        
+        .btn-primary {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #2775c3;
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid #e2e8f0;
+            color: var(--text-color);
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--light-bg);
+        }
+        
+        /* Comunicação Layout */
+        .communication-grid {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 24px;
+        }
+        
+        /* Lista de Clientes */
+        .clients-container {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            overflow: hidden;
+            height: calc(100vh - 150px);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .client-details {
+            text-align: right;
+            font-size: 11px;
+        }
+        
+        .message-time {
+            color: #a0aec0;
+            margin-bottom: 4px;
+        }
+        
+        .message-count {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: white;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 18px;
+        }
+
+        .clients-header {
+            padding: 16px;
+            border-bottom: 1px solid #edf2f7;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .clients-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        
+        .search-client {
+            padding: 12px 16px;
+            border-bottom: 1px solid #edf2f7;
+            position: relative;
+        }
+        
+        .search-client input {
+            width: 100%;
+            padding: 10px 12px 10px 36px;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            font-size: 14px;
+            outline: none;
+        }
+        
+        .search-client input:focus {
+            border-color: var(--secondary-color);
+        }
+        
+        .search-icon {
+            position: absolute;
+            left: 28px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #a0aec0;
+        }
+        
+        .clients-list {
+            list-style: none;
+            overflow-y: auto;
+            flex: 1;
+        }
+        
+        .client-item {
+            padding: 12px 16px;
+            border-bottom: 1px solid #edf2f7;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+        }
+        
+        .client-item:hover {
+            background-color: var(--light-bg);
+        }
+        
+        .client-item.active {
+            background-color: rgba(46, 134, 222, 0.05);
+            border-left: 3px solid var(--secondary-color);
+        }
+        
+        .client-avatar {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background-color: var(--secondary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            margin-right: 12px;
+        }
+        
+        .client-info {
+            flex: 1;
+        }
+        
+        .client-name {
+            font-weight: 500;
+            margin-bottom: 2px;
+        }
+        
+        .client-message {
+            font-size: 12px;
+            color: #718096;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 180px;
+        }
+
+                /* Chat Area */
+                .chat-container {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            overflow: hidden;
+            height: calc(100vh - 150px);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .chat-header {
+            padding: 16px;
+            border-bottom: 1px solid #edf2f7;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .chat-title {
+            display: flex;
+            align-items: center;
+        }
+        
+        .chat-avatar {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background-color: var(--secondary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            margin-right: 12px;
+        }
+        
+        .chat-user-info {
+            line-height: 1.4;
+        }
+        
+        .chat-user-name {
+            font-weight: 600;
+            font-size: 16px;
+        }
+        
+        .chat-user-status {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+        
+        .chat-actions {
+            display: flex;
+            gap: 12px;
+        }
+        
+        .chat-action-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .chat-action-btn:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .chat-messages {
+            flex: 1;
+            padding: 16px;
+            overflow-y: auto;
+            background-color: #f8fafc;
+        }
+        
+        .message {
+            margin-bottom: 20px;
+            max-width: 70%;
+        }
+        
+        .message-incoming {
+            align-self: flex-start;
+        }
+        
+        .message-outgoing {
+            align-self: flex-end;
+            margin-left: auto;
+        }
+        
+        .message-content {
+            padding: 12px 16px;
+            border-radius: 12px;
+            position: relative;
+        }
+        
+        .message-incoming .message-content {
+            background-color: white;
+            border: 1px solid #e2e8f0;
+            border-top-left-radius: 0;
+        }
+        
+        .message-outgoing .message-content {
+            background-color: var(--secondary-color);
+            color: white;
+            border-top-right-radius: 0;
+        }
+        
+        .message-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 4px;
+            font-size: 11px;
+            color: #a0aec0;
+        }
+        
+        .message-time {
+            margin-right: 4px;
+        }
+        
+        .message-status i {
+            font-size: 12px;
+            margin-left: 2px;
+        }
+
+        .chat-date-divider {
+            text-align: center;
+            margin: 20px 0;
+            position: relative;
+        }
+        
+        .date-divider-line {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 50%;
+            height: 1px;
+            background-color: #e2e8f0;
+            z-index: 1;
+        }
+        
+        .date-text {
+            position: relative;
+            z-index: 2;
+            background-color: #f8fafc;
+            padding: 0 12px;
+            display: inline-block;
+            font-size: 12px;
+            color: #718096;
+        }
+        
+        .chat-input-container {
+            padding: 12px 16px;
+            border-top: 1px solid #edf2f7;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .chat-actions-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--light-bg);
+            color: #64748b;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            font-size: 16px;
+        }
+        
+        .chat-actions-btn:hover {
+            background-color: #e2e8f0;
+        }
+        
+        .chat-input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 1px solid #e2e8f0;
+            border-radius: 24px;
+            outline: none;
+            font-size: 14px;
+            resize: none;
+            max-height: 120px;
+            overflow-y: auto;
+        }
+        
+        .chat-input:focus {
+            border-color: var(--secondary-color);
+        }
+        
+        .send-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--secondary-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            font-size: 16px;
+        }
+        
+        .send-btn:hover {
+            background-color: #2775c3;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .communication-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .clients-container {
+                height: 300px;
+            }
+            
+            .chat-container {
+                height: calc(100vh - 450px);
+            }
+        }
+
+
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="dashboard.html" class="logo">
+                    <i class="fas fa-scale-balanced logo-icon"></i>
+                    Juris<span>X</span>
+                </a>
+                
+                <ul class="nav-links">
+                    <li><a href="dashboard.html">Dashboard</a></li>
+                    <li><a href="processos.html">Processos</a></li>
+                    <li><a href="clientes.html">Clientes</a></li>
+                    <li><a href="comunicacao.html" class="active">Comunicação</a></li>
+                    <li><a href="agenda.html">Agenda</a></li>
+                    <li><a href="financeiro.html">Financeiro</a></li>
+                </ul>
+                
+                <div class="user-menu">
+                    <div class="notification-badge">
+                        <i class="fas fa-bell notification-icon"></i>
+                        <span class="badge">3</span>
+                    </div>
+                    
+                    <div class="user-profile">
+                        <div class="user-avatar">JS</div>
+                        <div class="user-info">
+                            <div class="user-name">João Silva</div>
+                            <div class="user-role">Advogado</div>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="page-header">
+                <h1 class="page-title">Comunicação com Clientes</h1>
+                <div class="actions-group">
+                    <button class="btn btn-outline">
+                        <i class="fas fa-envelope-open btn-icon"></i>
+                        Nova Mensagem
+                    </button>
+                    <button class="btn btn-primary">
+                        <i class="fas fa-paper-plane btn-icon"></i>
+                        Notificação em Massa
+                    </button>
+                </div>
+            </div>
+
+            <div class="communication-grid">
+                <!-- Lista de Clientes -->
+                <div class="clients-container">
+                    <div class="clients-header">
+                        <div class="clients-title">Conversas</div>
+                        <i class="fas fa-ellipsis-h"></i>
+                    </div>
+                    
+                    <div class="search-client">
+                        <i class="fas fa-search search-icon"></i>
+                        <input type="text" placeholder="Buscar cliente...">
+                    </div>
+                    
+                    <ul class="clients-list">
+                        <li class="client-item active">
+                            <div class="client-avatar">MS</div>
+                            <div class="client-info">
+                                <div class="client-name">Maria Santos</div>
+                                <div class="client-message">Olá Dr. Silva, tem novidades sobre...</div>
+                            </div>
+                            <div class="client-details">
+                                <div class="message-time">14:32</div>
+                                <div class="message-count">3</div>
+                            </div>
+                        </li>
+                        <li class="client-item">
+                            <div class="client-avatar">JO</div>
+                            <div class="client-info">
+                                <div class="client-name">João Oliveira</div>
+                                <div class="client-message">Quando será a próxima audiência?</div>
+                            </div>
+                            <div class="client-details">
+                                <div class="message-time">12:15</div>
+                                <div class="message-count">1</div>
+                            </div>
+                        </li>
+                        
+                        <li class="client-item">
+                            <div class="client-avatar">CA</div>
+                            <div class="client-info">
+                                <div class="client-name">Carlos Almeida</div>
+                                <div class="client-message">Recebi a notificação, muito obrigado!</div>
+                            </div>
+                            <div class="client-details">
+                                <div class="message-time">Ontem</div>
+                            </div>
+                        </li>
+                        
+                        <li class="client-item">
+                            <div class="client-avatar">LS</div>
+                            <div class="client-info">
+                                <div class="client-name">Lucia Soares</div>
+                                <div class="client-message">Já foi enviada a petição inicial?</div>
+                            </div>
+                            <div class="client-details">
+                                <div class="message-time">Ontem</div>
+                            </div>
+                        </li>
+                        
+                        <li class="client-item">
+                            <div class="client-avatar">RM</div>
+                            <div class="client-info">
+                                <div class="client-name">Ricardo Mendes</div>
+                                <div class="client-message">Podemos marcar uma reunião para...</div>
+                            </div>
+                            <div class="client-details">
+                                <div class="message-time">Segunda</div>
+                            </div>
+                        </li>
+                        
+                        <li class="client-item">
+                            <div class="client-avatar">FB</div>
+                            <div class="client-info">
+                                <div class="client-name">Fernanda Barros</div>
+                                <div class="client-message">Vou enviar os documentos que você solicitou.</div>
+                            </div>
+                            <div class="client-details">
+                                <div class="message-time">23/04</div>
+                            </div>
+                        </li>
+                        
+                        <li class="client-item">
+                            <div class="client-avatar">GL</div>
+                            <div class="client-info">
+                                <div class="client-name">Gabriel Lima</div>
+                                <div class="client-message">Entendi, aguardarei o retorno então.</div>
+                            </div>
+                            <div class="client-details">
+                                <div class="message-time">20/04</div>
+                            </div>
+                        </li>
+                        
+                        <li class="client-item">
+                            <div class="client-avatar">AP</div>
+                            <div class="client-info">
+                                <div class="client-name">Ana Paula Ferreira</div>
+                                <div class="client-message">Obrigada pelo atendimento.</div>
+                            </div>
+                            <div class="client-details">
+                                <div class="message-time">15/04</div>
+                            </div>
+                        </li>
+                        <li class="client-item">
+                            <div class="client-avatar">VR</div>
+                            <div class="client-info">
+                                <div class="client-name">Victor Rodrigues</div>
+                                <div class="client-message">Preciso de ajuda com um contrato.</div>
+                            </div>
+                            <div class="client-details">
+                                <div class="message-time">10/04</div>
+                            </div>
+                        </li>
+                        
+                        <!-- CONTINUAÇÃO COM A PARTE 2 -->
+                    </ul>
+                </div>
+                
+                <!-- CONTINUAÇÃO COM A PARTE 3 -->
+                <div class="chat-container">
+                    <div class="chat-header">
+                        <div class="chat-title">
+                            <div class="chat-avatar">MS</div>
+                            <div class="chat-user-info">
+                                <div class="chat-user-name">Maria Santos</div>
+                                <div class="chat-user-status">
+                                    <i class="fas fa-circle" style="font-size: 8px; color: var(--success-color);"></i>
+                                    Online
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="chat-actions">
+                            <div class="chat-action-btn">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <div class="chat-action-btn">
+                                <i class="fas fa-video"></i>
+                            </div>
+                            <div class="chat-action-btn">
+                                <i class="fas fa-info-circle"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="chat-messages">
+                        <!-- CONTINUAÇÃO COM A PARTE 4 -->
+                           <!-- Mensagens de Chat - Continuação da Parte 3 -->
+    <div class="chat-date-divider">
+        <div class="date-divider-line"></div>
+        <span class="date-text">Hoje</span>
+    </div>
+    
+    <!-- Mensagem do cliente -->
+    <div class="message message-incoming">
+        <div class="message-content">
+            Olá Dr. Silva, tem novidades sobre meu processo? Estou ansiosa para saber se houve alguma movimentação.
+        </div>
+        <div class="message-meta">
+            <div class="message-time">10:45</div>
+        </div>
+    </div>
+    
+    <!-- Mensagem do advogado -->
+    <div class="message message-outgoing">
+        <div class="message-content">
+            Bom dia, Maria! Sim, temos novidades. Ontem foi publicada uma decisão favorável. O juiz determinou a suspensão da cobrança até o julgamento final.
+        </div>
+        <div class="message-meta">
+            <div class="message-time">11:02</div>
+            <div class="message-status">
+                <i class="fas fa-check-double" style="color: var(--secondary-color);"></i>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Mensagem do cliente -->
+    <div class="message message-incoming">
+        <div class="message-content">
+            Que ótima notícia! Quando precisarei comparecer novamente ao fórum?
+        </div>
+        <div class="message-meta">
+            <div class="message-time">11:10</div>
+        </div>
+    </div>
+    
+    <!-- Mensagem do advogado -->
+    <div class="message message-outgoing">
+        <div class="message-content">
+            Por enquanto não há necessidade de comparecer. Temos uma audiência marcada apenas para o próximo mês, dia 15/06. Enviarei a intimação por e-mail também para você ter o documento oficial.
+        </div>
+        <div class="message-meta">
+            <div class="message-time">11:15</div>
+            <div class="message-status">
+                <i class="fas fa-check-double" style="color: var(--secondary-color);"></i>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Mensagem do cliente -->
+    <div class="message message-incoming">
+        <div class="message-content">
+            Perfeito! Agradeço muito pelo seu trabalho e por me manter informada. Tem algum documento que eu precise providenciar para essa audiência?
+        </div>
+        <div class="message-meta">
+            <div class="message-time">14:32</div>
+        </div>
+    </div>
+    
+    <!-- Área de digitação -->
+    <div class="chat-input-container">
+        <button class="chat-actions-btn">
+            <i class="fas fa-paperclip"></i>
+        </button>
+        <input type="text" class="chat-input" placeholder="Digite sua mensagem...">
+        <button class="send-btn">
+            <i class="fas fa-paper-plane"></i>
+        </button>
+    </div>
+                    </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

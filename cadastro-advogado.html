@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JurisX - Cadastro de Advogado</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #1a3d66;
+            --secondary-color: #2e86de;
+            --accent-color: #ff6b6b;
+            --light-bg: #f4f7fb;
+            --text-color: #2d3436;
+            --light-text: #ffffff;
+            --success-color: #10ac84;
+            --warning-color: #ff9f43;
+            --danger-color: #ee5253;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --card-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', 'Segoe UI', sans-serif;
+        }
+        
+        body {
+            background-color: var(--light-bg);
+            color: var(--text-color);
+            line-height: 1.6;
+            min-height: 100vh;
+            background-image: linear-gradient(135deg, rgba(26, 61, 102, 0.8) 0%, rgba(46, 134, 222, 0.8) 100%), url('https://images.unsplash.com/photo-1589391886645-d51941baf7fb?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            padding: 40px 0;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .register-container {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+        
+        .register-header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 25px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .header-logo {
+            display: flex;
+            align-items: center;
+            font-size: 24px;
+            font-weight: 700;
+        }
+        
+        .logo-icon {
+            margin-right: 10px;
+            color: var(--accent-color);
+        }
+        
+        .header-logo span {
+            color: var(--accent-color);
+        }
+        
+        .header-title {
+            font-size: 20px;
+            font-weight: 600;
+        }
+        
+        .register-content {
+            padding: 40px;
+        }
+        
+        .form-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .form-subtitle {
+            text-align: center;
+            color: #64748b;
+            margin-bottom: 30px;
+        }
+        
+        .form-progress {
+            display: flex;
+            margin-bottom: 40px;
+            position: relative;
+            justify-content: space-between;
+        }
+        
+        .progress-line {
+            position: absolute;
+            top: 15px;
+            left: 40px;
+            right: 40px;
+            height: 2px;
+            background-color: #e2e8f0;
+            z-index: 1;
+        }
+        
+        .progress-active {
+            position: absolute;
+            top: 15px;
+            left: 40px;
+            width: 0;
+            height: 2px;
+            background-color: var(--secondary-color);
+            z-index: 2;
+            transition: width 0.3s;
+        }
+        
+        .progress-step {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: white;
+            border: 2px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: #64748b;
+            position: relative;
+            z-index: 3;
+        }
+        
+        .progress-step.active {
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+            color: white;
+        }
+        
+        .progress-step.complete {
+            background-color: var(--success-color);
+            border-color: var(--success-color);
+            color: white;
+        }
+        
+        .progress-step-label {
+            position: absolute;
+            top: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 12px;
+            white-space: nowrap;
+            color: #64748b;
+        }
+        
+        .progress-step.active .progress-step-label {
+            color: var(--secondary-color);
+            font-weight: 500;
+        }
+        
+        .progress-step.complete .progress-step-label {
+            color: var(--success-color);
+            font-weight: 500;
+        }
+        
+        /* Continua na Parte 2 */
+        /* Continuação dos estilos para o cadastro de advogados */
+
+.form-step {
+    display: none;
+}
+
+.form-step.active {
+    display: block;
+}
+
+.form-section {
+    margin-bottom: 30px;
+}
+
+.section-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--primary-color);
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.form-row {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    flex: 1;
+}
+
+.form-label {
+    font-size: 14px;
+    margin-bottom: 6px;
+    display: block;
+    color: #64748b;
+}
+
+.form-control {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: all 0.3s;
+}
+
+.form-control:focus {
+    border-color: var(--secondary-color);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(46, 134, 222, 0.1);
+}
+
+.form-info {
+    font-size: 12px;
+    color: #64748b;
+    margin-top: 6px;
+}
+
+.form-select {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    font-size: 14px;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 16px;
+}
+
+.form-check {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 15px;
+}
+
+.form-check-input {
+    margin-right: 10px;
+    margin-top: 4px;
+}
+
+.form-check-label {
+    font-size: 14px;
+    color: var(--text-color);
+}
+
+.form-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+}
+
+.btn {
+    padding: 12px 24px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: inline-flex;
+    align-items: center;
+    border: none;
+}
+
+.btn-icon {
+    margin-right: 8px;
+    font-size: 16px;
+}
+
+.btn-primary {
+    background-color: var(--secondary-color);
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #2775c3;
+}
+
+.btn-outline {
+    background-color: transparent;
+    border: 1px solid #e2e8f0;
+    color: var(--text-color);
+}
+
+.btn-outline:hover {
+    background-color: var(--light-bg);
+}
+
+.btn-disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.required::after {
+    content: '*';
+    color: var(--accent-color);
+    margin-left: 3px;
+}
+
+.form-message {
+    padding: 15px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    display: none;
+}
+
+.form-message.success {
+    background-color: rgba(16, 172, 132, 0.1);
+    color: var(--success-color);
+    border: 1px solid rgba(16, 172, 132, 0.2);
+    display: block;
+}
+
+.form-message.error {
+    background-color: rgba(238, 82, 83, 0.1);
+    color: var(--danger-color);
+    border: 1px solid rgba(238, 82, 83, 0.2);
+    display: block;
+}
+
+@media (max-width: 768px) {
+    .form-row {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .register-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+    }
+    
+    .register-content {
+        padding: 20px;
+    }
+    
+    .progress-step-label {
+        display: none;
+    }
+    
+    .progress-line,
+    .progress-active {
+        left: 15px;
+        right: 15px;
+    }
+}
+    </style>
+    <!-- Continuação dos estilos em cadastro-advogado-parte2.css -->
+    <link rel="stylesheet" href="css/cadastro-advogado-parte2.css">
+</head>
+<body>
+    <div class="container">
+        <div class="register-container">
+            <div class="register-header">
+                <div class="header-logo">
+                    <i class="fas fa-scale-balanced logo-icon"></i>
+                    Juris<span>X</span>
+                </div>
+                <div class="header-title">
+                    Cadastro de Advogado
+                </div>
+            </div>
+            
+            <!-- Conteúdo do Formulário em cadastro-advogado-parte3.html -->
+
+            <!-- Cabeçalho e Barra de Progresso -->
+<div class="register-content">
+    <h1 class="form-title">Faça parte da comunidade JurisX</h1>
+    <p class="form-subtitle">Complete o cadastro para ter acesso à plataforma</p>
+    
+    <div class="form-progress">
+        <div class="progress-line"></div>
+        <div class="progress-active" id="progress-bar"></div>
+        
+        <div class="progress-step active" id="step1">
+            1
+            <div class="progress-step-label">Dados Pessoais</div>
+        </div>
+        
+        <div class="progress-step" id="step2">
+            2
+            <div class="progress-step-label">Dados Profissionais</div>
+        </div>
+        
+        <div class="progress-step" id="step3">
+            3
+            <div class="progress-step-label">Acesso</div>
+        </div>
+        
+        <div class="progress-step" id="step4">
+            4
+            <div class="progress-step-label">Confirmação</div>
+        </div>
+    </div>
+    
+    <form id="register-form">
+        <!-- Os passos do formulário serão incluídos aqui -->
+        <!-- Etapa 1: Dados Pessoais -->
+<div class="form-step active" id="step1-content">
+    <div class="form-section">
+        <h3 class="section-title">Dados Pessoais</h3>
+        
+        <div class="form-row">
+            <div class="form-group">
+                <label class="form-label required" for="nome">Nome Completo</label>
+                <input type="text" class="form-control" id="nome" required>
+            </div>
+        </div>
+        
+        <div class="form-row">
+            <div class="form-group">
+                <label class="form-label required" for="cpf">CPF</label>
+                <input type="text" class="form-control" id="cpf" placeholder="000.000.000-00" required>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label required" for="data_nascimento">Data de Nascimento</label>
+                <input type="date" class="form-control" id="data_nascimento" required>
+            </div>
+        </div>
+        
+        <div class="form-row">
+            <div class="form-group">
+                <label class="form-label required" for="telefone">Telefone</label>
+                <input type="tel" class="form-control" id="telefone" placeholder="(00) 00000-0000" required>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label required" for="email">E-mail</label>
+                <input type="email" class="form-control" id="email" required>
+            </div>
+        </div>
+    </div>
+    
+    <div class="form-section">
+        <h3 class="section-title">Endereço</h3>
+        
+        <div class="form-row">
+            <div class="form-group">
+                <label class="form-label required" for="cep">CEP</label>
+                <input type="text" class="form-control" id="cep" placeholder="00000-000" required>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label required" for="estado">Estado</label>
+                <select class="form-select" id="estado" required>
+                    <option value="">Selecione</option>
+                    <option value="AC">Acre</option>
+                    <option value="AL">Alagoas</option>
+                    <option value="AP">Amapá</option>
+                    <option value="AM">Amazonas</option>
+                    <option value="BA">Bahia</option>
+                    <option value="CE">Ceará</option>
+                    <option value="DF">Distrito Federal</option>
+                    <option value="ES">Espírito Santo</option>
+                    <option value="GO">Goiás</option>
+                    <option value="MA">Maranhão</option>
+                    <option value="MT">Mato Grosso</option>
+                    <option value="MS">Mato Grosso do Sul</option>
+                    <option value="MG">Minas Gerais</option>
+                    <option value="PA">Pará</option>
+                    <option value="PB">Paraíba</option>
+                    <option value="PR">Paraná</option>
+                    <option value="PE">Pernambuco</option>
+                    <option value="PI">Piauí</option>
+                    <option value="RJ">Rio de Janeiro</option>
+                    <option value="RN">Rio Grande do Norte</option>
+                    <option value="RS">Rio Grande do Sul</option>
+                    <option value="RO">Rondônia</option>
+                    <option value="RR">Roraima</option>
+                    <option value="SC">Santa Catarina</option>
+                    <option value="SP">São Paulo</option>
+                    <option value="SE">Sergipe</option>
+                    <option value="TO">Tocantins</option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="form-row">
+            <div class="form-group">
+                <label class="form-label required" for="cidade">Cidade</label>
+                <input type="text" class="form-control" id="cidade" required>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label required" for="bairro">Bairro</label>
+                <input type="text" class="form-control" id="bairro" required>
+            </div>
+        </div>
+        
+        <div class="form-row">
+            <div class="form-group">
+                <label class="form-label required" for="logradouro">Logradouro</label>
+                <input type="text" class="form-control" id="logradouro" required>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label required" for="numero">Número</label>
+                <input type="text" class="form-control" id="numero" required>
+            </div>
+        </div>
+        
+        <div class="form-row">
+            <div class="form-group">
+                <label class="form-label" for="complemento">Complemento</label>
+                <input type="text" class="form-control" id="complemento">
+            </div>
+        </div>
+    </div>
+    
+    <div class="form-buttons">
+        <button type="button" class="btn btn-outline" onclick="window.location.href='login.html'">
+            <i class="fas fa-arrow-left btn-icon"></i>
+            Voltar
+        </button>
+        <button type="button" class="btn btn-primary" id="btn-step1">
+            Próximo
+            <i class="fas fa-arrow-right btn-icon" style="margin-right: 0; margin-left: 8px;"></i>
+        </button>
+    </div>
+</div>
+<!-- Etapa 2: Dados Profissionais -->
+<div class="form-step" id="step2-content">
+    <div class="form-section">
+        <h3 class="section-title">Dados Profissionais</h3>
+        
+        <div class="form-row">
+            <div class="form-group">
+                <label class="form-label required" for="numero_oab">Número da OAB</label>
+                <input type="text" class="form-control" id="numero_oab" required>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label required" for="seccional">Seccional</label>
+                <select class="form-select" id="seccional" required>
+                    <option value="">Selecione</option>
+                    <option value="AC">AC</option>
+                    <option value="AL">AL</option>
+                    <option value="AP">AP</option>
+                    <option value="AM">AM</option>
+                    <option value="BA">BA</option>
+                    <option value="CE">CE</option>
+                    <option value="DF">DF</option>
+                    <option value="ES">ES</option>
+                    <option value="GO">GO</option>
+                    <option value="MA">MA</option>
+                    <option value="MT">MT</option>
+                    <option value="MS">MS</option>
+                    <option value="MG">MG</option>
+                    <option value="PA">PA</option>
+                    <option value="PB">PB</option>
+                    <option value="PR">PR</option>
+                    <option value="PE">PE</option>
+                    <option value="PI">PI</option>
+                    <option value="RJ">RJ</option>
+                    <option value="RN">RN</option>
+                    <option value="RS">RS</option>
+                    <option value="RO">RO</option>
+                    <option value="RR">RR</option>
+                    <option value="SC">SC</option>
+                    <option value="SP">SP</option>
+                    <option value="SE">SE</option>
+                    <option value="TO">TO</option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="form-row">
+            <div class="form-group">
+                <label class="form-label required" for="data_inscricao">Data de Inscrição</label>
+                <input type="date" class="form-control" id="data_inscricao" required>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label" for="especialidade">Especialidade Principal</label>
+                <select class="form-select" id="especialidade">
+                    <option value="">Selecione</option>
+                    <option value="Administrativo">Direito Administrativo</option>
+                    <option value="Ambiental">Direito Ambiental</option>
+                    <option value="Civil">Direito Civil</option>
+                    <option value="Consumidor">Direito do Consumidor</option>
+                    <option value="Empresarial">Direito Empresarial</option>
+                    <option value="Família">Direito de Família</option>
+                    <option value="Penal">Direito Penal</option>
+                    <option value="Trabalhista">Direito Trabalhista</option>
+                    <option value="Tributário">Direito Tributário</option>
+                    <option value="Outro">Outro</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    
+    <div class="form-section">
+        <h3 class="section-title">Sobre o Escritório</h3>
+        
+        <div class="form-row">
+            <div class="form-group">
+                <label class="form-label required" for="tipo_atuacao">Tipo de Atuação</label>
+                <select class="form-select" id="tipo_atuacao" required>
+                    <option value="">Selecione</option>
+                    <option value="Autônomo">Advogado Autônomo</option>
+                    <option value="Escritório Próprio">Escritório Próprio</option>
+                    <option value="Associado">Associado a Escritório</option>
+                    <option value="Sociedade">Sociedade de Advogados</option>
+                    <option value="Empresa">Departamento Jurídico de Empresa</option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="form-row" id="escritorio-info" style="display: none;">
+            <div class="form-group">
+                <label class="form-label" for="nome_escritorio">Nome do Escritório</label>
+                <input type="text" class="form-control" id="nome_escritorio">
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label" for="cnpj_escritorio">CNPJ do Escritório</label>
+                <input type="text" class="form-control" id="cnpj_escritorio" placeholder="00.000.000/0000-00">
+            </div>
+        </div>
+    </div>
+    
+    <div class="form-buttons">
+        <button type="button" class="btn btn-outline" id="btn-back-step1">
+            <i class="fas fa-arrow-left btn-icon"></i>
+            Voltar
+        </button>
+        <button type="button" class="btn btn-primary" id="btn-step2">
+            Próximo
+            <i class="fas fa-arrow-right btn-icon" style="margin-right: 0; margin-left: 8px;"></i>
+        </button>
+    </div>
+</div>
+<!-- Etapa 3: Acesso -->
+<div class="form-step" id="step3-content">
+    <div class="form-section">
+        <h3 class="section-title">Acesso à Plataforma</h3>
+        
+        <div class="form-row">
+            <div class="form-group">
+                <label class="form-label required" for="senha">Senha</label>
+                <input type="password" class="form-control" id="senha" required>
+                <div class="form-info">
+                    A senha deve conter no mínimo 8 caracteres, incluindo letras maiúsculas, minúsculas, números e símbolos.
+                </div>
+            </div>
+        </div>
+        
+        <div class="form-row">
+            <div class="form-group">
+                <label class="form-label required" for="confirmar_senha">Confirmar Senha</label>
+                <input type="password" class="form-control" id="confirmar_senha" required>
+            </div>
+        </div>
+        
+        <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="termos" required>
+            <label class="form-check-label" for="termos">
+                Li e concordo com os <a href="#" style="color: var(--secondary-color);">Termos de Uso</a> e <a href="#" style="color: var(--secondary-color);">Política de Privacidade</a> da plataforma JurisX.
+            </label>
+        </div>
+        
+        <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="marketing">
+            <label class="form-check-label" for="marketing">
+                Aceito receber e-mails com novidades, atualizações e conteúdos relevantes para advogados.
+            </label>
+        </div>
+    </div>
+    
+    <div class="form-section">
+        <h3 class="section-title">Verificação</h3>
+        
+        <div class="form-row">
+            <div class="form-group">
+                <label class="form-label" for="documento_oab">Carteira da OAB (frente e verso)</label>
+                <input type="file" class="form-control" id="documento_oab" accept="image/*,.pdf">
+                <div class="form-info">
+                    Formatos aceitos: JPG, PNG ou PDF (máximo 5MB)
+                </div>
+            </div>
+        </div>
+        
+        <div class="form-row">
+            <div class="form-group">
+                <label class="form-label" for="documento_identidade">Documento de Identidade</label>
+                <input type="file" class="form-control" id="documento_identidade" accept="image/*,.pdf">
+                <div class="form-info">
+                    Formatos aceitos: JPG, PNG ou PDF (máximo 5MB)
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="form-buttons">
+        <button type="button" class="btn btn-outline" id="btn-back-step2">
+            <i class="fas fa-arrow-left btn-icon"></i>
+            Voltar
+        </button>
+        <button type="button" class="btn btn-primary" id="btn-step3">
+            Próximo
+            <i class="fas fa-arrow-right btn-icon" style="margin-right: 0; margin-left: 8px;"></i>
+        </button>
+    </div>
+</div>
+<!-- Etapa 4: Confirmação -->
+<div class="form-step" id="step4-content">
+    <div class="form-message success">
+        <i class="fas fa-check-circle" style="margin-right: 8px;"></i>
+        Todos os dados foram preenchidos com sucesso! Revise as informações abaixo antes de finalizar o cadastro.
+    </div>
+    
+    <div class="form-section">
+        <h3 class="section-title">Resumo do Cadastro</h3>
+        
+        <div style="background-color: var(--light-bg); padding: 20px; border-radius: 8px;">
+            <h4 style="margin-bottom: 15px; color: var(--primary-color);">Dados Pessoais</h4>
+            <div class="form-row">
+                <div class="form-group">
+                    <div class="form-label">Nome Completo</div>
+                    <div class="form-control" id="resumo-nome" style="background-color: white;"></div>
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <div class="form-label">CPF</div>
+                    <div class="form-control" id="resumo-cpf" style="background-color: white;"></div>
+                </div>
+                
+                <div class="form-group">
+                    <div class="form-label">Data de Nascimento</div>
+                    <div class="form-control" id="resumo-data-nascimento" style="background-color: white;"></div>
+                </div>
+            </div>
+            
+            <h4 style="margin: 20px 0 15px; color: var(--primary-color);">Dados Profissionais</h4>
+            <div class="form-row">
+                <div class="form-group">
+                    <div class="form-label">Número da OAB</div>
+                    <div class="form-control" id="resumo-oab" style="background-color: white;"></div>
+                </div>
+                
+                <div class="form-group">
+                    <div class="form-label">Seccional</div>
+                    <div class="form-control" id="resumo-seccional" style="background-color: white;"></div>
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <div class="form-label">Tipo de Atuação</div>
+                    <div class="form-control" id="resumo-atuacao" style="background-color: white;"></div>
+                </div>
+            </div>
+            
+            <h4 style="margin: 20px 0 15px; color: var(--primary-color);">Contato</h4>
+            <div class="form-row">
+                <div class="form-group">
+                    <div class="form-label">E-mail</div>
+                    <div class="form-control" id="resumo-email" style="background-color: white;"></div>
+                </div>
+                
+                <div class="form-group">
+                    <div class="form-label">Telefone</div>
+                    <div class="form-control" id="resumo-telefone" style="background-color: white;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="form-section">
+        <h3 class="section-title">Próximos Passos</h3>
+        
+        <div style="margin-bottom: 20px;">
+            <p>Após finalizar o cadastro:</p>
+            <ol style="margin-left: 20px; margin-top: 10px;">
+                <li>Você receberá um e-mail de confirmação com instruções para ativar sua conta.</li>
+                <li>Sua documentação será validada pela nossa equipe (prazo de até 48 horas úteis).</li>
+                <li>Após a validação, você terá acesso completo à plataforma JurisX.</li>
+            </ol>
+        </div>
+    </div>
+    
+    <div class="form-buttons">
+        <button type="button" class="btn btn-outline" id="btn-back-step3">
+            <i class="fas fa-arrow-left btn-icon"></i>
+            Voltar
+        </button>
+        <button type="submit" class="btn btn-primary" id="btn-submit">
+            <i class="fas fa-check-circle btn-icon"></i>
+            Finalizar Cadastro
+        </button>
+    </div>
+</div>
+
+    </form>
+</div>
+
+
+        </div>
+    </div>
+    
+    <!-- Script de controle em cadastro-advogado-script.js -->
+    <script src="js/cadastro-advogado-script.js"></script>
+</body>
+</html>

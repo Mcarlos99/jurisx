@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JurisX - Agenda</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/agenda.css">
+</head>
+<body>
+    <!-- Cabeçalho -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="dashboard.html" class="logo">
+                    <i class="fas fa-scale-balanced logo-icon"></i>
+                    Juris<span>X</span>
+                </a>
+                
+                <ul class="nav-links">
+                    <li><a href="dashboard.html">Dashboard</a></li>
+                    <li><a href="processos.html">Processos</a></li>
+                    <li><a href="clientes.html">Clientes</a></li>
+                    <li><a href="comunicacao.html">Comunicação</a></li>
+                    <li><a href="agenda.html" class="active">Agenda</a></li>
+                    <li><a href="financeiro.html">Financeiro</a></li>
+                </ul>
+                
+                <div class="user-menu">
+                    <div class="notification-badge">
+                        <i class="fas fa-bell notification-icon"></i>
+                        <span class="badge">3</span>
+                    </div>
+                    
+                    <div class="user-profile">
+                        <div class="user-avatar">JS</div>
+                        <div class="user-info">
+                            <div class="user-name">João Silva</div>
+                            <div class="user-role">Advogado</div>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="page-header">
+                <h1 class="page-title">Agenda</h1>
+                <div class="actions-group">
+                    <button class="btn btn-outline">
+                        <i class="fas fa-filter btn-icon"></i>
+                        Filtros
+                    </button>
+                    <button class="btn btn-outline">
+                        <i class="fas fa-sync-alt btn-icon"></i>
+                        Atualizar
+                    </button>
+                    <button class="btn btn-primary" id="btn-novo-evento">
+                        <i class="fas fa-plus btn-icon"></i>
+                        Novo Evento
+                    </button>
+                </div>
+            </div>
+
+            <div class="agenda-grid">
+                <!-- Aqui serão incluídos os componentes da agenda -->
+                <div id="calendar-sidebar-container">
+                    <!-- Sidebar do calendário será carregada aqui -->
+                    <!-- Componente da Sidebar do Calendário -->
+<div class="calendar-sidebar">
+    <div class="mini-calendar">
+        <div class="month-selector">
+            <div class="current-month">Maio 2023</div>
+            <div class="month-nav">
+                <button class="month-nav-btn" id="prev-month">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="month-nav-btn" id="next-month">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+        
+        <div class="weekdays">
+            <div class="weekday">D</div>
+            <div class="weekday">S</div>
+            <div class="weekday">T</div>
+            <div class="weekday">Q</div>
+            <div class="weekday">Q</div>
+            <div class="weekday">S</div>
+            <div class="weekday">S</div>
+        </div>
+        
+        <div class="calendar-days" id="mini-calendar-days">
+            <!-- Os dias do mês serão gerados via JavaScript -->
+            <div class="calendar-day other-month">30</div>
+            <div class="calendar-day">1</div>
+            <div class="calendar-day">2</div>
+            <div class="calendar-day">3</div>
+            <div class="calendar-day">4</div>
+            <div class="calendar-day">5</div>
+            <div class="calendar-day">6</div>
+            <div class="calendar-day">7</div>
+            <div class="calendar-day">8</div>
+            <div class="calendar-day">9</div>
+            <div class="calendar-day">10</div>
+            <div class="calendar-day">11</div>
+            <div class="calendar-day">12</div>
+            <div class="calendar-day">13</div>
+            <div class="calendar-day">14</div>
+            <div class="calendar-day">15</div>
+            <div class="calendar-day">16</div>
+            <div class="calendar-day">17</div>
+            <div class="calendar-day">18</div>
+            <div class="calendar-day">19</div>
+            <div class="calendar-day">20</div>
+            <div class="calendar-day">21</div>
+            <div class="calendar-day has-events">22</div>
+            <div class="calendar-day">23</div>
+            <div class="calendar-day today selected">24</div>
+            <div class="calendar-day">25</div>
+            <div class="calendar-day has-events">26</div>
+            <div class="calendar-day">27</div>
+            <div class="calendar-day">28</div>
+            <div class="calendar-day">29</div>
+            <div class="calendar-day">30</div>
+            <div class="calendar-day">31</div>
+            <div class="calendar-day other-month">1</div>
+            <div class="calendar-day other-month">2</div>
+            <div class="calendar-day other-month">3</div>
+        </div>
+    </div>
+    
+    <div class="calendar-filters">
+        <div class="filter-title">Filtros</div>
+        <ul class="filter-list">
+            <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox" id="filter-audiencias" checked>
+                <span class="color-marker color-blue"></span>
+                <label class="filter-label" for="filter-audiencias">Audiências</label>
+            </li>
+            <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox" id="filter-prazos" checked>
+                <span class="color-marker color-orange"></span>
+                <label class="filter-label" for="filter-prazos">Prazos</label>
+            </li>
+            <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox" id="filter-reunioes" checked>
+                <span class="color-marker color-green"></span>
+                <label class="filter-label" for="filter-reunioes">Reuniões</label>
+            </li>
+            <li class="filter-item">
+                <input type="checkbox" class="filter-checkbox" id="filter-outros" checked>
+                <span class="color-marker color-red"></span>
+                <label class="filter-label" for="filter-outros">Outros</label>
+            </li>
+        </ul>
+    </div>
+    
+    <div class="upcoming-events">
+        <div class="upcoming-title">Próximos Eventos</div>
+        <ul class="upcoming-list">
+            <li class="upcoming-item">
+                <div class="upcoming-date">
+                    <div class="upcoming-day">24</div>
+                    <div class="upcoming-month">Mai</div>
+                </div>
+                <div class="upcoming-details">
+                    <div class="upcoming-title">Audiência - Maria Santos</div>
+                    <div class="upcoming-time">14:30 - 15:30</div>
+                    <div class="upcoming-type event-blue">Audiência</div>
+                </div>
+            </li>
+            <li class="upcoming-item">
+                <div class="upcoming-date">
+                    <div class="upcoming-day">26</div>
+                    <div class="upcoming-month">Mai</div>
+                </div>
+                <div class="upcoming-details">
+                    <div class="upcoming-title">Prazo - Contestação</div>
+                    <div class="upcoming-time">Final do dia</div>
+                    <div class="upcoming-type event-orange">Prazo</div>
+                </div>
+            </li>
+            <li class="upcoming-item">
+                <div class="upcoming-date">
+                    <div class="upcoming-day">26</div>
+                    <div class="upcoming-month">Mai</div>
+                </div>
+                <div class="upcoming-details">
+                    <div class="upcoming-title">Reunião com Cliente</div>
+                    <div class="upcoming-time">10:00 - 11:00</div>
+                    <div class="upcoming-type event-green">Reunião</div>
+                </div>
+            </li>
+            <li class="upcoming-item">
+                <div class="upcoming-date">
+                    <div class="upcoming-day">29</div>
+                    <div class="upcoming-month">Mai</div>
+                </div>
+                <div class="upcoming-details">
+                    <div class="upcoming-title">Despacho - Processo 0012345-67</div>
+                    <div class="upcoming-time">09:00</div>
+                    <div class="upcoming-type event-red">Outro</div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+                </div>
+                
+                <div id="calendar-main-container">
+                    <!-- Calendário principal será carregado aqui -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal para adicionar/editar evento -->
+    <div id="event-modal-container">
+        <!-- O conteúdo do modal será carregado aqui -->
+    </div>
+
+    <script src="js/agenda.js"></script>
+</body>
+</html>

@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JurisX - Login</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #1a3d66;
+            --secondary-color: #2e86de;
+            --accent-color: #ff6b6b;
+            --light-bg: #f4f7fb;
+            --text-color: #2d3436;
+            --light-text: #ffffff;
+            --success-color: #10ac84;
+            --warning-color: #ff9f43;
+            --danger-color: #ee5253;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --card-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', 'Segoe UI', sans-serif;
+        }
+        
+        body {
+            background-color: var(--light-bg);
+            color: var(--text-color);
+            line-height: 1.6;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-image: linear-gradient(135deg, rgba(26, 61, 102, 0.8) 0%, rgba(46, 134, 222, 0.8) 100%), url('https://images.unsplash.com/photo-1589391886645-d51941baf7fb?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .login-container {
+            display: flex;
+            width: 1000px;
+            max-width: 90%;
+            background-color: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            height: 600px;
+        }
+        
+        .login-left {
+            flex: 1;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .login-right {
+            flex: 1;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .login-logo {
+            display: flex;
+            align-items: center;
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 40px;
+        }
+        
+        .login-logo-icon {
+            margin-right: 12px;
+            color: var(--accent-color);
+        }
+        
+        .login-logo span {
+            color: var(--accent-color);
+        }
+        
+        .login-welcome {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+        
+        .login-subtitle {
+            margin-bottom: 30px;
+            font-size: 16px;
+            opacity: 0.8;
+        }
+        
+        .login-benefits {
+            margin-top: 30px;
+        }
+        
+        .benefit-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        
+        .benefit-icon {
+            width: 32px;
+            height: 32px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+        }
+        
+        .login-form-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 30px;
+            color: var(--primary-color);
+        }
+        
+        .user-type-selector {
+            display: flex;
+            margin-bottom: 24px;
+            background-color: var(--light-bg);
+            border-radius: 6px;
+            padding: 4px;
+        }
+        
+        .user-type-option {
+            flex: 1;
+            padding: 10px;
+            text-align: center;
+            cursor: pointer;
+            border-radius: 4px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .user-type-option.active {
+            background-color: white;
+            box-shadow: var(--card-shadow);
+            color: var(--primary-color);
+        }
+        
+        .user-type-option:not(.active) {
+            color: #64748b;
+        }
+        
+        .user-type-option i {
+            margin-right: 6px;
+        }
+        
+        .input-group {
+            margin-bottom: 20px;
+        }
+        
+        .input-label {
+            font-size: 14px;
+            margin-bottom: 6px;
+            display: block;
+            color: #64748b;
+        }
+        
+        .input-field {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+        
+        .input-field:focus {
+            border-color: var(--secondary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(46, 134, 222, 0.1);
+        }
+        
+        .input-group-flex {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+        
+        .remember-me {
+            display: flex;
+            align-items: center;
+        }
+        
+        .remember-me input {
+            margin-right: 6px;
+        }
+        
+        .forgot-password {
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-size: 14px;
+        }
+        
+        .forgot-password:hover {
+            text-decoration: underline;
+        }
+        
+        .login-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 20px;
+        }
+        
+        .login-btn:hover {
+            background-color: #2775c3;
+        }
+        
+        .login-footer {
+            text-align: center;
+            font-size: 14px;
+            color: #64748b;
+            margin-bottom: 15px;
+        }
+        
+        .login-footer a {
+            color: var(--secondary-color);
+            text-decoration: none;
+        }
+        
+        .login-footer a:hover {
+            text-decoration: underline;
+        }
+        
+        .divider {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .divider-text {
+            padding: 0 10px;
+            color: #64748b;
+            font-size: 12px;
+        }
+        
+        .register-options {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .register-btn {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            background-color: white;
+            color: var(--text-color);
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .register-btn:hover {
+            background-color: var(--light-bg);
+        }
+        
+        .register-btn i {
+            margin-right: 8px;
+        }
+        
+        @media (max-width: 768px) {
+            .login-container {
+                flex-direction: column;
+                height: auto;
+            }
+            
+            .login-left {
+                padding: 30px;
+            }
+            
+            .login-right {
+                padding: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-left">
+            <div class="login-logo">
+                <i class="fas fa-scale-balanced login-logo-icon"></i>
+                Juris<span>X</span>
+            </div>
+            
+            <h1 class="login-welcome">Bem-vindo ao JurisX</h1>
+            <p class="login-subtitle">Sistema inteligente de gestão jurídica para advogados e clientes.</p>
+            
+            <div class="login-benefits">
+                <div class="benefit-item">
+                    <div class="benefit-icon">
+                        <i class="fas fa-gavel"></i>
+                    </div>
+                    <div class="benefit-text">Acompanhamento processual em tempo real</div>
+                </div>
+                
+                <div class="benefit-item">
+                    <div class="benefit-icon">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <div class="benefit-text">Comunicação direta com advogados</div>
+                </div>
+                
+                <div class="benefit-item">
+                    <div class="benefit-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <div class="benefit-text">Acesso a documentos e petições</div>
+                </div>
+                
+                <div class="benefit-item">
+                    <div class="benefit-icon">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <div class="benefit-text">Controle de prazos e audiências</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="login-right">
+            <h2 class="login-form-title">Acesse sua conta</h2>
+            
+            <div class="user-type-selector">
+                <div class="user-type-option active" id="advogado-option">
+                    <i class="fas fa-user-tie"></i> Advogado
+                </div>
+                <div class="user-type-option" id="cliente-option">
+                    <i class="fas fa-user"></i> Cliente
+                </div>
+            </div>
+            
+            <form id="login-form">
+                <div class="input-group">
+                    <label class="input-label" for="email">E-mail</label>
+                    <input type="email" id="email" class="input-field" placeholder="Seu e-mail" required>
+                </div>
+                
+                <div class="input-group">
+                    <label class="input-label" for="password">Senha</label>
+                    <input type="password" id="password" class="input-field" placeholder="Sua senha" required>
+                </div>
+                
+                <div class="input-group-flex">
+                    <div class="remember-me">
+                        <input type="checkbox" id="remember" checked>
+                        <label for="remember">Lembrar-me</label>
+                    </div>
+                    
+                    <a href="#" class="forgot-password">Esqueceu a senha?</a>
+                </div>
+                
+                <button type="submit" class="login-btn">Entrar</button>
+                
+                <div class="login-footer">
+                    <p>Cliente sem acesso? <a href="#">Fale com seu escritório</a></p>
+                </div>
+                
+                <div class="divider">
+                    <span class="divider-text">OU</span>
+                </div>
+                
+                <div class="register-options">
+                    <a href="cadastro-advogado.html" class="register-btn">
+                        <i class="fas fa-user-plus"></i> Cadastrar como Advogado
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Alternar entre tipo de usuário
+            const advogadoOption = document.getElementById('advogado-option');
+            const clienteOption = document.getElementById('cliente-option');
+            
+            advogadoOption.addEventListener('click', function() {
+                advogadoOption.classList.add('active');
+                clienteOption.classList.remove('active');
+            });
+            
+            clienteOption.addEventListener('click', function() {
+                clienteOption.classList.add('active');
+                advogadoOption.classList.remove('active');
+            });
+            
+            // Formulário de login
+            const loginForm = document.getElementById('login-form');
+            
+            loginForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const email = document.getElementById('email').value;
+                const password = document.getElementById('password').value;
+                const isAdvogado = document.getElementById('advogado-option').classList.contains('active');
+                
+                // Aqui você pode adicionar lógica para verificar as credenciais
+                // e redirecionar para a página apropriada
+                
+                // Exemplo simples:
+                if (isAdvogado) {
+                    window.location.href = 'dashboard.html'; // Dashboard do advogado
+                } else {
+                    window.location.href = 'cliente-dashboard.html'; // Dashboard do cliente
+                }
+            });
+        });
+    </script>
+</body>
+</html>

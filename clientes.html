@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JurisX - Gerenciamento de Clientes</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/clientes.css">
+</head>
+<body>
+    <!-- Inclusão do Cabeçalho -->
+    <!-- Na implementação real, isso seria feito com alguma tecnologia de servidor ou JavaScript -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="dashboard.html" class="logo">
+                    <i class="fas fa-scale-balanced logo-icon"></i>
+                    Juris<span>X</span>
+                </a>
+                
+                <ul class="nav-links">
+                    <li><a href="dashboard.html">Dashboard</a></li>
+                    <li><a href="processos.html">Processos</a></li>
+                    <li><a href="clientes.html" class="active">Clientes</a></li>
+                    <li><a href="comunicacao.html">Comunicação</a></li>
+                    <li><a href="agenda.html">Agenda</a></li>
+                    <li><a href="financeiro.html">Financeiro</a></li>
+                </ul>
+                
+                <div class="user-menu">
+                    <div class="notification-badge">
+                        <i class="fas fa-bell notification-icon"></i>
+                        <span class="badge">3</span>
+                    </div>
+                    
+                    <div class="user-profile">
+                        <div class="user-avatar">JS</div>
+                        <div class="user-info">
+                            <div class="user-name">João Silva</div>
+                            <div class="user-role">Advogado</div>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="page-header">
+                <h1 class="page-title">Gerenciamento de Clientes</h1>
+                <div class="actions-group">
+                    <button class="btn btn-outline">
+                        <i class="fas fa-filter btn-icon"></i>
+                        Filtros
+                    </button>
+                    <button class="btn btn-outline">
+                        <i class="fas fa-download btn-icon"></i>
+                        Exportar
+                    </button>
+                    <button class="btn btn-primary" id="btn-novo-cliente">
+                        <i class="fas fa-plus btn-icon"></i>
+                        Novo Cliente
+                    </button>
+                </div>
+            </div>
+
+            <div class="clients-grid">
+                <!-- Aqui serão incluídos os componentes da lista e detalhes -->
+                <div id="clients-list-container">
+                    <!-- Lista de clientes será carregada aqui -->
+                    <!-- Componente de Lista de Clientes -->
+<div class="clients-list-container">
+    <div class="clients-header">
+        <div class="clients-title">Meus Clientes</div>
+        <div class="clients-count">43 clientes</div>
+    </div>
+    
+    <div class="search-box">
+        <i class="fas fa-search search-icon"></i>
+        <input type="text" placeholder="Buscar cliente...">
+    </div>
+    
+    <div class="filter-tabs">
+        <div class="filter-tab active">Todos</div>
+        <div class="filter-tab">Pessoa Física</div>
+        <div class="filter-tab">Pessoa Jurídica</div>
+        <div class="filter-tab">Recentes</div>
+    </div>
+    
+    <ul class="clients-list">
+        <li class="client-item active" data-id="1">
+            <div class="client-avatar">MS</div>
+            <div class="client-info">
+                <div class="client-name">Maria Santos</div>
+                <div class="client-type">Pessoa Física</div>
+            </div>
+            <span class="client-status status-active">Ativo</span>
+        </li>
+        
+        <li class="client-item" data-id="2">
+            <div class="client-avatar">JO</div>
+            <div class="client-info">
+                <div class="client-name">João Oliveira</div>
+                <div class="client-type">Pessoa Física</div>
+            </div>
+            <span class="client-status status-active">Ativo</span>
+        </li>
+        
+        <li class="client-item" data-id="3">
+            <div class="client-avatar">EA</div>
+            <div class="client-info">
+                <div class="client-name">Empresa ABC Ltda</div>
+                <div class="client-type">Pessoa Jurídica</div>
+            </div>
+            <span class="client-status status-active">Ativo</span>
+        </li>
+        
+        <li class="client-item" data-id="4">
+            <div class="client-avatar">CM</div>
+            <div class="client-info">
+                <div class="client-name">Carlos Mendes</div>
+                <div class="client-type">Pessoa Física</div>
+            </div>
+            <span class="client-status status-active">Ativo</span>
+        </li>
+        
+        <li class="client-item" data-id="5">
+            <div class="client-avatar">CX</div>
+            <div class="client-info">
+                <div class="client-name">Comércio XYZ Ltda</div>
+                <div class="client-type">Pessoa Jurídica</div>
+            </div>
+            <span class="client-status status-active">Ativo</span>
+        </li>
+        
+        <li class="client-item" data-id="6">
+            <div class="client-avatar">LS</div>
+            <div class="client-info">
+                <div class="client-name">Lucia Soares</div>
+                <div class="client-type">Pessoa Física</div>
+            </div>
+            <span class="client-status status-inactive">Inativo</span>
+        </li>
+        
+        <li class="client-item" data-id="7">
+            <div class="client-avatar">RM</div>
+            <div class="client-info">
+                <div class="client-name">Roberto Martins</div>
+                <div class="client-type">Pessoa Física</div>
+            </div>
+            <span class="client-status status-active">Ativo</span>
+        </li>
+        
+        <li class="client-item" data-id="8">
+            <div class="client-avatar">IG</div>
+            <div class="client-info">
+                <div class="client-name">Indústria GHI S.A.</div>
+                <div class="client-type">Pessoa Jurídica</div>
+            </div>
+            <span class="client-status status-active">Ativo</span>
+        </li>
+        
+        <li class="client-item" data-id="9">
+            <div class="client-avatar">AP</div>
+            <div class="client-info">
+                <div class="client-name">Ana Paula Ferreira</div>
+                <div class="client-type">Pessoa Física</div>
+            </div>
+            <span class="client-status status-active">Ativo</span>
+        </li>
+        
+        <li class="client-item" data-id="10">
+            <div class="client-avatar">MC</div>
+            <div class="client-info">
+                <div class="client-name">Marcos Costa</div>
+                <div class="client-type">Pessoa Física</div>
+            </div>
+            <span class="client-status status-inactive">Inativo</span>
+        </li>
+    </ul>
+</div>
+                </div>
+                
+                <div id="client-details-container">
+                    <!-- Detalhes do cliente serão carregados aqui -->
+                    <!-- Componente de Detalhes do Cliente -->
+<div class="client-details">
+    <div class="details-header">
+        <div class="client-profile">
+            <div class="client-profile-avatar">MS</div>
+            <div class="client-profile-info">
+                <h2>Maria Santos</h2>
+                <p>Pessoa Física</p>
+            </div>
+        </div>
+        
+        <div class="client-actions">
+            <button class="action-btn" title="Enviar mensagem">
+                <i class="fas fa-comment"></i>
+            </button>
+            <button class="action-btn" title="Editar cliente" id="btn-edit-client">
+                <i class="fas fa-edit"></i>
+            </button>
+            <button class="action-btn" title="Mais opções">
+                <i class="fas fa-ellipsis-v"></i>
+            </button>
+        </div>
+    </div>
+    
+    <div class="client-tabs">
+        <div class="client-tab active">Informações</div>
+        <div class="client-tab">Processos</div>
+        <div class="client-tab">Documentos</div>
+        <div class="client-tab">Financeiro</div>
+        <div class="client-tab">Histórico</div>
+    </div>
+    
+    <div class="tab-content">
+        <div class="info-section">
+            <h3 class="section-title">Dados Pessoais</h3>
+            
+            <div class="info-grid">
+                <div class="info-item">
+                    <div class="info-label">Nome Completo</div>
+                    <div class="info-value">Maria Santos Silva</div>
+                </div>
+                
+                <div class="info-item">
+                    <div class="info-label">CPF</div>
+                    <div class="info-value">123.456.789-00</div>
+                </div>
+                
+                <div class="info-item">
+                    <div class="info-label">RG</div>
+                    <div class="info-value">24.456.789-X</div>
+                </div>
+                
+                <div class="info-item">
+                    <div class="info-label">Data de Nascimento</div>
+                    <div class="info-value">15/05/1985</div>
+                </div>
+                
+                <div class="info-item">
+                    <div class="info-label">Estado Civil</div>
+                    <div class="info-value">Casada</div>
+                </div>
+                
+                <div class="info-item">
+                    <div class="info-label">Profissão</div>
+                    <div class="info-value">Engenheira Civil</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="info-section">
+            <h3 class="section-title">Contato</h3>
+            
+            <div class="info-grid">
+                <div class="info-item">
+                    <div class="info-label">E-mail</div>
+                    <div class="info-value">maria.santos@email.com</div>
+                </div>
+                
+                <div class="info-item">
+                    <div class="info-label">Telefone Celular</div>
+                    <div class="info-value">(11) 98765-4321</div>
+                </div>
+                
+                <div class="info-item">
+                    <div class="info-label">Telefone Fixo</div>
+                    <div class="info-value">(11) 3456-7890</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="info-section">
+            <h3 class="section-title">Endereço</h3>
+            
+            <div class="info-grid">
+                <div class="info-item">
+                    <div class="info-label">Logradouro</div>
+                    <div class="info-value">Av. Paulista</div>
+                </div>
+                
+                <div class="info-item">
+                    <div class="info-label">Número</div>
+                    <div class="info-value">1000</div>
+                </div>
+                
+                <div class="info-item">
+                    <div class="info-label">Complemento</div>
+                    <div class="info-value">Apto 105</div>
+                </div>
+                
+                <div class="info-item">
+                    <div class="info-label">Bairro</div>
+                    <div class="info-value">Bela Vista</div>
+                </div>
+                
+                <div class="info-item">
+                    <div class="info-label">Cidade</div>
+                    <div class="info-value">São Paulo</div>
+                </div>
+                
+                <div class="info-item">
+                    <div class="info-label">Estado</div>
+                    <div class="info-value">SP</div>
+                </div>
+                
+                <div class="info-item">
+                    <div class="info-label">CEP</div>
+                    <div class="info-value">01311-000</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="info-section">
+            <h3 class="section-title">Processos Recentes</h3>
+            
+            <ul class="process-list-compact">
+                <li class="process-item-compact">
+                    <div class="process-item-header">
+                        <div class="process-number">0012345-67.2023.8.26.0100</div>
+                        <div class="process-type tag-civil">Civil</div>
+                    </div>
+                    <div class="process-description">Indenização por Danos Morais</div>
+                </li>
+                
+                <li class="process-item-compact">
+                    <div class="process-item-header">
+                        <div class="process-number">0098765-43.2022.8.26.0100</div>
+                        <div class="process-type tag-civil">Civil</div>
+                    </div>
+                    <div class="process-description">Execução de Título Extrajudicial</div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal para adicionar/editar cliente -->
+    <!-- Modal para Adicionar/Editar Cliente -->
+<div class="modal-overlay" id="client-modal">
+    <div class="modal-container">
+        <div class="modal-header">
+            <h2 class="modal-title" id="modal-title">Adicionar Novo Cliente</h2>
+            <button class="modal-close" id="modal-close">×</button>
+        </div>
+        
+        <form id="client-form">
+            <div class="modal-body">
+                <div class="form-section">
+                    <h3 class="form-title">Informações Gerais</h3>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label required">Tipo de Cliente</label>
+                            <select class="form-select" id="client-type" required>
+                                <option value="">Selecione</option>
+                                <option value="fisica">Pessoa Física</option>
+                                <option value="juridica">Pessoa Jurídica</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label required">Status</label>
+                            <select class="form-select" id="client-status" required>
+                                <option value="ativo">Ativo</option>
+                                <option value="inativo">Inativo</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <!-- Campos para Pessoa Física -->
+                    <div id="fisica-fields">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label required" for="nome">Nome Completo</label>
+                                <input type="text" class="form-control" id="nome" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label required" for="cpf">CPF</label>
+                                <input type="text" class="form-control" id="cpf" placeholder="000.000.000-00" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="rg">RG</label>
+                                <input type="text" class="form-control" id="rg">
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label" for="data_nascimento">Data de Nascimento</label>
+                                <input type="date" class="form-control" id="data_nascimento">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="estado_civil">Estado Civil</label>
+                                <select class="form-select" id="estado_civil">
+                                    <option value="">Selecione</option>
+                                    <option value="Solteiro(a)">Solteiro(a)</option>
+                                    <option value="Casado(a)">Casado(a)</option>
+                                    <option value="Divorciado(a)">Divorciado(a)</option>
+                                    <option value="Viúvo(a)">Viúvo(a)</option>
+                                    <option value="Separado(a)">Separado(a)</option>
+                                    <option value="União Estável">União Estável</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label" for="profissao">Profissão</label>
+                                <input type="text" class="form-control" id="profissao">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Campos para Pessoa Jurídica -->
+                    <div id="juridica-fields" style="display: none;">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label required" for="razao_social">Razão Social</label>
+                                <input type="text" class="form-control" id="razao_social">
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label" for="nome_fantasia">Nome Fantasia</label>
+                                <input type="text" class="form-control" id="nome_fantasia">
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label required" for="cnpj">CNPJ</label>
+                                <input type="text" class="form-control" id="cnpj" placeholder="00.000.000/0000-00">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="inscricao_estadual">Inscrição Estadual</label>
+                                <input type="text" class="form-control" id="inscricao_estadual">
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label" for="ramo_atividade">Ramo de Atividade</label>
+                                <input type="text" class="form-control" id="ramo_atividade">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-section">
+                    <h3 class="form-title">Contato</h3>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label required" for="email">E-mail</label>
+                            <input type="email" class="form-control" id="email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label required" for="telefone_celular">Telefone Celular</label>
+                            <input type="tel" class="form-control" id="telefone_celular" placeholder="(00) 00000-0000" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" for="telefone_fixo">Telefone Fixo</label>
+                            <input type="tel" class="form-control" id="telefone_fixo" placeholder="(00) 0000-0000">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-section">
+                    <h3 class="form-title">Endereço</h3>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label required" for="cep">CEP</label>
+                            <input type="text" class="form-control" id="cep" placeholder="00000-000" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label required" for="logradouro">Logradouro</label>
+                            <input type="text" class="form-control" id="logradouro" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label required" for="numero">Número</label>
+                            <input type="text" class="form-control" id="numero" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" for="complemento">Complemento</label>
+                            <input type="text" class="form-control" id="complemento">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label required" for="bairro">Bairro</label>
+                            <input type="text" class="form-control" id="bairro" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label required" for="cidade">Cidade</label>
+                            <input type="text" class="form-control" id="cidade" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label required" for="estado">Estado</label>
+                            <select class="form-select" id="estado" required>
+                                <option value="">Selecione</option>
+                                <option value="AC">Acre</option>
+                                <option value="AL">Alagoas</option>
+                                <option value="AP">Amapá</option>
+                                <option value="AM">Amazonas</option>
+                                <option value="BA">Bahia</option>
+                                <option value="CE">Ceará</option>
+                                <option value="DF">Distrito Federal</option>
+                                <option value="ES">Espírito Santo</option>
+                                <option value="GO">Goiás</option>
+                                <option value="MA">Maranhão</option>
+                                <option value="MT">Mato Grosso</option>
+                                <option value="MS">Mato Grosso do Sul</option>
+                                <option value="MG">Minas Gerais</option>
+                                <option value="PA">Pará</option>
+                                <option value="PB">Paraíba</option>
+                                <option value="PR">Paraná</option>
+                                <option value="PE">Pernambuco</option>
+                                <option value="PI">Piauí</option>
+                                <option value="RJ">Rio de Janeiro</option>
+                                <option value="RN">Rio Grande do Norte</option>
+                                <option value="RS">Rio Grande do Sul</option>
+                                <option value="RO">Rondônia</option>
+                                <option value="RR">Roraima</option>
+                                <option value="SC">Santa Catarina</option>
+                                <option value="SP">São Paulo</option>
+                                <option value="SE">Sergipe</option>
+                                <option value="TO">Tocantins</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-section">
+                    <h3 class="form-title">Observações</h3>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <textarea class="form-control" id="observacoes" rows="3" placeholder="Informações adicionais sobre o cliente..."></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline" id="btn-cancel">Cancelar</button>
+                <button type="submit" class="btn btn-primary" id="btn-save">Salvar</button>
+            </div>
+        </form>
+    </div>
+</div>
+    <div id="client-modal-container">
+        <!-- O conteúdo do modal será carregado aqui -->
+    </div>
+
+    <script src="js/clientes.js"></script>
+</body>
+</html>
